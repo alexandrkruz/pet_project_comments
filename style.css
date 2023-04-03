@@ -391,6 +391,7 @@ body {
     padding-top: 20PX;
     margin-top: 20px;
     margin-left: 45px;
+    resize: none;
 }
 
 .save-btn {
@@ -404,5 +405,6 @@ body {
     color: #2a1515;
     font-weight: 700;
     font-size: 20px;
+    cursor: pointer;
 }
 
