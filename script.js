@@ -29,9 +29,11 @@ const saveComment = function() {
 const renderComments = () => {
 
     for(let i = 0; i < allComments.length; i++) {
-
+        const comment = `<article><h3>${allComments[i].name}</h3></article>`
         console.log(allComments[i]);
     }
+
+    
 
 };
 
