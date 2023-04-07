@@ -16,25 +16,17 @@ const saveComment = function() {
 
     userName.value = '';
     userComment.value = '';
-
-
 }
-
 
 // Кожний коментар записати як окремий блок <article>.....
 // Коли отримав усі коментарі в тегах треба вівести їх на єкран
 // Знайти блок куди віводити і вставии його
 
-
 const renderComments = () => {
-
     for(let i = 0; i < allComments.length; i++) {
         const comment = `<article><h3>${allComments[i].name}</h3></article>`
         console.log(allComments[i]);
     }
-
-    
-
 };
 
 renderComments();
