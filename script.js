@@ -1,4 +1,5 @@
 const sabeBtn = document.getElementById('saveComments');
+const commentList = document.getElementById('comment-list');
 const allComments = [{name: 'Alex', comment: 'Some text'}, {name: 'Oleg', comment: 'Some text2'}];
 
 const saveComment = function() {
@@ -18,30 +19,23 @@ const saveComment = function() {
     userComment.value = '';
 }
 
-    renderComments();
 // Кожний коментар записати як окремий блок <article>.....
 // Коли отримав усі коментарі в тегах треба вівести їх на єкран
 // Знайти блок куди віводити і вставии його
 
 const renderComments = () => {
-    commentList.innerHTML = '';
+    let comment = '';
+
     for(let i = 0; i < allComments.length; i++) {
-        const comment = document.createElement('article');
-        const name = document.createElement('h3');
-        const commentText = document.createElement('p');
-
-        name.innerText = allComments[i].name;
-        commentText.innerText = allComments[i].comment;
-
-        comment.appendChild(name);
-        comment.appendChild(commentText);
-
-        commentList.appendChild(comment);
+        comment += `<article>
+            <h3 class='user-name'>${allComments[i].name}</h3>
+            <div class='user-comment'>${allComments[i].comment}</div>
+        </article>`;
     }
+
+    commentList.innerHTML = comment;
 };
 
 renderComments();
 
 sabeBtn.addEventListener('click', saveComment);
-
-
