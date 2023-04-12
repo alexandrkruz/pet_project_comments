@@ -358,8 +358,7 @@ body {
 }
 
 .container {
-    width: 400px;
-    margin: 100px auto;
+    position: relative;
 }
 
 .blank {
@@ -406,5 +405,13 @@ body {
     font-weight: 700;
     font-size: 20px;
     cursor: pointer;
+}
+
+article {
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid black;
+  box-sizing: border-box;
 }
 
