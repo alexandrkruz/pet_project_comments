@@ -38,4 +38,25 @@ const renderComments = () => {
 
 renderComments();
 
+// fetch('https://api.github.com/users/AlekseyYefanov')
+//   .then(function (response) {
+//     console.log('response')
+//   })
+
+
 sabeBtn.addEventListener('click', saveComment);
+
+async function showAvatar() {
+
+    let responce = await fetch(user.json);
+    let user = await responce.json();
+    let githubResponce = await fetch(`https://api.github.com/users/${user.name}`);
+    let img = document.createElement('img');
+    img.src = githubUser.avatar_url;
+    img.className = "promice-avatar-example";
+    document.body.appened(img);
+
+    return githubUser;
+}
+
+showAvatar();
