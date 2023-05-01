@@ -78,3 +78,39 @@ async function showAvatar() {
     return githubUser;
   }
   showAvatar();
+
+  const comments = [
+    { text: "Комментарий 1", date: new Date("2022-05-01T12:30:00") },
+    { text: "Комментарий 2", date: new Date("2022-04-30T10:30:00") },
+    { text: "Комментарий 3", date: new Date("2022-04-29T18:00:00") },
+  ];
+  
+
+
+  function displayComments(comments, sortDirection) {
+    if (sortDirection === "desc") {
+        comments.sort((a, b) => b.date - a.date);
+    } else {
+        comments.sort((a, b) => a.date - b.date);
+    }
+    
+    const container = document.getElementById("comment-list");
+    container.innerHTML = "";
+
+    comments.forEach((comment) => {
+    const div = document.createElement("div");
+    div.textContent = comment.text;
+    container.appendChild(div);
+  });
+
+  const sortDirectionSelect = document.getElementById("sort-direction");
+    sortDirectionSelect.addEventListener("change", () => {
+    const sortDirection = sortDirectionSelect.value;
+    displayComments(comments, sortDirection);
+    });
+}
+
+
+
+
+  
