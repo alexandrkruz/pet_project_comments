@@ -48,15 +48,33 @@ sabeBtn.addEventListener('click', saveComment);
 
 async function showAvatar() {
 
-    let responce = await fetch(user.json);
+    let responce = await fetch('./user.json');
     let user = await responce.json();
     let githubResponce = await fetch(`https://api.github.com/users/${user.name}`);
+    let responceJs = await githubResponce.json();
     let img = document.createElement('img');
-    img.src = githubUser.avatar_url;
-    img.className = "promice-avatar-example";
+    img.src = responceJs.avatar_url;
+    img.className = "promise-avatar-example";
     document.body.appened(img);
-
-    return githubUser;
+    
+    return githubResponce;
 }
 
 showAvatar();
+
+async function showAvatar() {
+
+    let response = await fetch('./user.json');
+    let user = await response.json();
+    // запрашиваем информацию об этом пользователе из github
+    let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+    let githubUser = await githubResponse.json();
+    // отображаем аватар пользователя
+    let img = document.createElement('img');
+    img.src = githubUser.avatar_url;
+    img.className = "promise-avatar-example";
+    document.body.append(img);
+  
+    return githubUser;
+  }
+  showAvatar();
