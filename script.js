@@ -44,44 +44,44 @@ const allComments = [{name: 'Alex', comment: 'Some text'}, {name: 'Oleg', commen
 
 let comments = [];
 
-async function showAvatar() {
+async function getUserComments() {
 
     let responce = await fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
-    console.log('responce--> ', responce)
     let user = await responce.json();
     comments = [...user]
-    console.log('user--> ', user)
-
+    displayComments(user);
 }
 
-showAvatar();
+getUserComments();
 
- 
-console.log('comments--> ', comments)
+
 
 const sortDirectionSelect = document.getElementById("sort-direction");
    
-sortDirectionSelect.addEventListener("change", () => {
+sortDirectionSelect.addEventListener("change", sortedComments);
+
+
+function sortedComments() {
+
   const sortDirection = sortDirectionSelect.value;
-  console.log('comments--> ', comments)
-  displayComments(comments, sortDirection);
-  
-});
 
+  if (sortDirection === "desc") {
+    comments.sort((a, b) => b.date - a.date);
+  } else {
+      comments.sort((a, b) => a.date - b.date);
+  }
 
-  function displayComments(comments, sortDirection) {
-    if (sortDirection === "desc") {
-        comments.sort((a, b) => b.date - a.date);
-    } else {
-        comments.sort((a, b) => a.date - b.date);
-    }
+  displayComments(comments);
+}
+
+  function displayComments(comments) {
+ 
     
     const container = document.getElementById("comment-list");
     container.innerHTML = "";
-
     comments.forEach((comment) => {
     const div = document.createElement("div");
-    div.textContent = comment.text;
+    div.textContent = comment.title;
     container.appendChild(div);
   });
 
