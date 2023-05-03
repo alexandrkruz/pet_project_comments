@@ -2,89 +2,71 @@ const sabeBtn = document.getElementById('saveComments');
 const commentList = document.getElementById('comment-list');
 const allComments = [{name: 'Alex', comment: 'Some text'}, {name: 'Oleg', comment: 'Some text2'}];
 
-const saveComment = function() {
+// const saveComment = function() {
 
-    const userName = document.getElementById('userName');
-    const userComment = document.getElementById('userComment');
+//     const userName = document.getElementById('userName');
+//     const userComment = document.getElementById('userComment');
 
-    const newComment = {
-        name: userName.value,
-        comment: userComment.value,
-        date: new Date()
-    }
+//     const newComment = {
+//         name: userName.value,
+//         comment: userComment.value,
+//         date: new Date()
+//     }
 
-    allComments.push(newComment);
+//     allComments.push(newComment);
 
-    userName.value = '';
-    userComment.value = '';
-}
+//     userName.value = '';
+//     userComment.value = '';
+// }
 
 // Кожний коментар записати як окремий блок <article>.....
 // Коли отримав усі коментарі в тегах треба вівести їх на єкран
 // Знайти блок куди віводити і вставии його
 
-const renderComments = () => {
-    let comment = '';
+// const renderComments = () => {
+//     let comment = '';
 
-    for(let i = 0; i < allComments.length; i++) {
-        comment += `<article>
-            <h3 class='user-name'>${allComments[i].name}</h3>
-            <div class='user-comment'>${allComments[i].comment}</div>
-        </article>`;
-    }
+//     for(let i = 0; i < allComments.length; i++) {
+//         comment += `<article>
+//             <h3 class='user-name'>${allComments[i].name}</h3>
+//             <div class='user-comment'>${allComments[i].comment}</div>
+//         </article>`;
+//     }
 
-    commentList.innerHTML = comment;
-};
+//     commentList.innerHTML = comment;
+// };
 
-renderComments();
-
-// fetch('https://api.github.com/users/AlekseyYefanov')
-//   .then(function (response) {
-//     console.log('response')
-//   })
+// renderComments();
 
 
-sabeBtn.addEventListener('click', saveComment);
+
+// sabeBtn.addEventListener('click', saveComment);
+
+let comments = [];
 
 async function showAvatar() {
 
-    let responce = await fetch('./user.json');
+    let responce = await fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
+    console.log('responce--> ', responce)
     let user = await responce.json();
-    let githubResponce = await fetch(`https://api.github.com/users/${user.name}`);
-    let responceJs = await githubResponce.json();
-    let img = document.createElement('img');
-    img.src = responceJs.avatar_url;
-    img.className = "promise-avatar-example";
-    document.body.appened(img);
-    
-    return githubResponce;
+    comments = [...user]
+    console.log('user--> ', user)
+
 }
 
 showAvatar();
 
-async function showAvatar() {
+ 
+console.log('comments--> ', comments)
 
-    let response = await fetch('./user.json');
-    let user = await response.json();
-    // запрашиваем информацию об этом пользователе из github
-    let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
-    let githubUser = await githubResponse.json();
-    // отображаем аватар пользователя
-    let img = document.createElement('img');
-    img.src = githubUser.avatar_url;
-    img.className = "promise-avatar-example";
-    document.body.append(img);
+const sortDirectionSelect = document.getElementById("sort-direction");
+   
+sortDirectionSelect.addEventListener("change", () => {
+  const sortDirection = sortDirectionSelect.value;
+  console.log('comments--> ', comments)
+  displayComments(comments, sortDirection);
   
-    return githubUser;
-  }
-  showAvatar();
-
-  const comments = [
-    { text: "Комментарий 1", date: new Date("2022-05-01T12:30:00") },
-    { text: "Комментарий 2", date: new Date("2022-04-30T10:30:00") },
-    { text: "Комментарий 3", date: new Date("2022-04-29T18:00:00") },
-  ];
-  
+});
 
 
   function displayComments(comments, sortDirection) {
@@ -103,11 +85,7 @@ async function showAvatar() {
     container.appendChild(div);
   });
 
-  const sortDirectionSelect = document.getElementById("sort-direction");
-    sortDirectionSelect.addEventListener("change", () => {
-    const sortDirection = sortDirectionSelect.value;
-    displayComments(comments, sortDirection);
-    });
+
 }
 
 
