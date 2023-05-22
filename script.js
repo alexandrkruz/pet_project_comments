@@ -3,38 +3,35 @@ const commentList = document.getElementById('comment-list');
 let allComments = [];
 
 // TODO: add filter by text 
-// 1. Навесить обработчик собития (какой подумать)
-// 2. Получить данные с инпута
+// 1. Навесить обработчик собития (какой подумать) +
+// 2. Получить данные с инпута +
 // 3. Сравнить данные с поля с заголовками комментариев array.filter()
 
 const searchInput = document.getElementById('search');
 
 const filteredByText = (event) => {
-  console.log('filteredByText--> ', event.target.value);
+//   console.log('filteredByText--> ', event.target.value);
   let filteredComments = [];
-  //array.filter()
   displayComments(filteredComments)//отфильтрованые коментарии по совпадению;
-
 }
-
 
 searchInput.addEventListener('keyup', filteredByText);
 
+const filteredCommentsReturn = array.filter(function(comments) {
+    return comments = filteredByText;
+});
 
+displayComments(filteredCommentsReturn);
 
 const saveComment = function() {
-
     const userName = document.getElementById('userName');
     const userComment = document.getElementById('userComment');
-
     const newComment = {
         name: userName.value,
         comment: userComment.value,
         date: new Date()
     }
-
     allComments.push(newComment);
-
     userName.value = '';
     userComment.value = '';
 }
@@ -87,20 +84,8 @@ function sortedComments() {
   }
 
   displayComments(comments);
-}
+};
 
-//   function displayComments(comments) {
- 
-//     const container = document.getElementById("comment-list");
-//     container.innerHTML = "";
-//     comments.forEach((comment) => {
-//     const div = document.createElement("div");
-//     div.textContent = comment.title;
-//     container.appendChild(div);
-//   });
-
-
-// }
 
 
 
