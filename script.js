@@ -1,6 +1,6 @@
 const sabeBtn = document.getElementById('saveComments');
 const commentList = document.getElementById('comment-list');
-let allComments = JSON.parse(sessionStorage.getItem('commentsList'));
+// let allComments = JSON.parse(sessionStorage.getItem('commentsList'));
 
 
 // console.log(allComments)
@@ -209,10 +209,10 @@ function getUserComments() {
         "body": "quo et expedita modi cum officia vel magni\ndoloribus qui repudiandae\nvero nisi sit\nquos veniam quod sed accusamus veritatis error",
         "time": "01.02.2022"
     }));
-    // console.log('allComments--> ', JSON.parse(sessionStorage.getItem('commentsList')))
+    console.log('allComments--> ', JSON.parse(sessionStorage.getItem('commentsList')))
 
     // displayComments(JSON.parse(sessionStorage.getItem('commentsList')));
-    displayComments('allComments');
+    displayComments(JSON.parse(sessionStorage.getItem('commentsList')));
 }
 
 getUserComments();
