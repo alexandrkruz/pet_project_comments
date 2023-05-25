@@ -1,6 +1,9 @@
 const sabeBtn = document.getElementById('saveComments');
 const commentList = document.getElementById('comment-list');
-let allComments = [];
+let allComments = sessionStorage.getItem('commentsList');
+
+
+// console.log(allComments)
 
 // TODO: add filter by text 
 // 1. Навесить обработчик собития (какой подумать) +
@@ -119,7 +122,6 @@ const saveComment = function() {
 
  function displayComments(comments) {
     let comment = '';
-
     for(let i = 0; i < comments.length; i++) {
         comment += `<article class='block'>
             <h3 class='user-name'>${comments[i].title}</h3>
@@ -134,14 +136,12 @@ const saveComment = function() {
 
 sabeBtn.addEventListener('click', saveComment);
 
-async function getUserComments() {
+function getUserComments() {
 
-    let responce = await fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
-    let user = await responce.json();
-    allComments = [...user]
-console.log('allComments--> ', allComments)
+    let responce = sessionStorage.setItem('commentsList', 'https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
+    console.log('allComments--> ', allComments)
 
-    displayComments(user);
+    displayComments('allComments');
 }
 
 getUserComments();
