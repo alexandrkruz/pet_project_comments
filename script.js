@@ -139,9 +139,11 @@ async function getUserComments() {
     let responce = await fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
     let user = await responce.json();
     allComments = [...user]
-console.log('allComments--> ', allComments)
+    console.log('allComments--> ', allComments)
+    sessionStorage.setItem('commentsList', allComments)
 
-    displayComments(user);
+    // displayComments(user);
+    displayComments(allComments);
 }
 
 getUserComments();
