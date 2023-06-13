@@ -7,11 +7,21 @@ let allComments = [];
 // 2. Получить данные с инпута +  
 // 3. Сравнить данные с поля с заголовками комментариев array.filter()  
 
+// document.querySelector("#searchComments").oninput = function() {
+//     let val = this.value.trim();
+//     let listItems = document.querySelectorAll(allComments .title);
+//     if (val != '') {
+//         listItems.forEach(function(elem) {
+        
+//         });
+//     }
+// }
+
 const searchInput = document.getElementById('search');
 
 const filteredByText = (event) => {
 
-    console.log('filteredByText--> ', event.target.value);
+    // console.log('filteredByText--> ', event.target.value);
 
     const filteredCommentsReturn = [
       {
@@ -85,15 +95,27 @@ const filteredByText = (event) => {
           "time": "01.02.2022"
       }
   ].filter(function(item) {
-
-      if(item.title === event.target.value) {
-        return true
+    let val = this.value.trim();
+      if(val != '') {
+        allComments.forEach(function(elem) {
+            if(elem.innerText.search(val) == -1){
+                elem.classList.add('hide');
+            }
+            else {
+                elem.classList.remove('hide');
+            }
+        });
       }
-      return false
+      else {
+        allComments.forEach(function (elem) {
+            elem.classList.remove('hide');
+        });
+      }
+    
     });
 
 displayComments(filteredCommentsReturn);
-  displayComments(filteredComments)//отфильтрованые коментарии по совпадению;
+//   displayComments(filteredComments)//отфильтрованые коментарии по совпадению;
 }
 
 searchInput.addEventListener('keyup', filteredByText);
@@ -140,6 +162,7 @@ async function getUserComments() {
     let user = await responce.json();
     allComments = [...user]
     console.log('allComments--> ', allComments)
+    
     sessionStorage.setItem('commentsList', allComments)
 
     // displayComments(user);
@@ -154,18 +177,19 @@ const sortDirectionSelect = document.getElementById("sort-direction");
 sortDirectionSelect.addEventListener("change", sortedComments);
 
 
-function sortedComments() {
 
+function sortedComments() {
   const sortDirection = sortDirectionSelect.value;
 
   if (sortDirection === "desc") {
-    comments.sort((a, b) => b.date - a.date);
+    allComments = allComments.slice().sort((a, b) => new Date(b.time) - new Date(a.time));
   } else {
-      comments.sort((a, b) => a.date - b.date);
+    allComments = allComments.slice().sort((a, b) => new Date(a.time) - new Date(b.time));
   }
 
-  displayComments(comments);
-};
+  displayComments(allComments);
+}
+
 
 
 
