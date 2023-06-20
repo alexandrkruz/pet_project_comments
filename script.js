@@ -1,11 +1,20 @@
 const saveBtn = document.getElementById('saveComments');
+saveBtn.addEventListener('click', saveComment);
+
 const commentList = document.getElementById('comment-list');
 
-let allComments = JSON.parse(sessionStorage.getItem('comments')) || [];
-
 const searchInput = document.getElementById('search');
+searchInput.addEventListener('keyup', filteredByText);
 
-const filteredByText = (event) => {
+const sortDirectionSelect = document.getElementById("sort-direction");
+sortDirectionSelect.addEventListener("change", sortedComments);
+
+
+getUserComments();
+
+function filteredByText(event) {
+  let allComments = getToStorage('commentsList');
+
   const filteredComments = allComments.filter((item) => {
     return item.title.includes(event.target.value);
   });
@@ -13,9 +22,8 @@ const filteredByText = (event) => {
   displayComments(filteredComments);
 }
 
-searchInput.addEventListener('keyup', filteredByText);
 
-const saveComment = function() {
+function saveComment() {
   const userName = document.getElementById('userName');
   const userComment = document.getElementById('userComment');
   const newComment = {
@@ -23,14 +31,24 @@ const saveComment = function() {
     body: userComment.value,
     time: new Date().toLocaleDateString()
   }
-  allComments.push(newComment);
+
   userName.value = '';
   userComment.value = '';
-  saveCommentsToStorage();
+
+  let comments = getToStorage('commentsList');
+  comments.push(newComment);
+
+  saveToStorage('commentsList', comments);
+  displayComments(comments);
 }
 
-function saveCommentsToStorage() {
-  sessionStorage.setItem('comments', JSON.stringify(allComments));
+function saveToStorage(name, data) {
+  sessionStorage.setItem(name, JSON.stringify(data));
+}
+
+function getToStorage(name) {
+  return JSON.parse(sessionStorage.getItem(name))
+
 }
 
 function displayComments(comments) {
@@ -46,24 +64,17 @@ function displayComments(comments) {
   commentList.innerHTML = comment;
 }
 
-saveBtn.addEventListener('click', saveComment);
-
 async function getUserComments() {
   let response = await fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
   let comments = await response.json();
-  allComments = [...comments];
-  saveCommentsToStorage();
+  saveToStorage('commentsList', comments);
   displayComments(comments);
 };
 
-getUserComments();
-
-const sortDirectionSelect = document.getElementById("sort-direction");
-
-sortDirectionSelect.addEventListener("change", sortedComments);
 
 function sortedComments() {
   const sortDirection = sortDirectionSelect.value;
+  let allComments = getToStorage('commentsList');
 
   if (sortDirection === "decs") {
     allComments.sort((a, b) => new Date(b.time) - new Date(a.time));
