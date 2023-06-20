@@ -22,7 +22,6 @@ function filteredByText(event) {
   displayComments(filteredComments);
 }
 
-
 function saveComment() {
   const userName = document.getElementById('userName');
   const userComment = document.getElementById('userComment');
@@ -43,11 +42,11 @@ function saveComment() {
 }
 
 function saveToStorage(name, data) {
-  sessionStorage.setItem(name, JSON.stringify(data));
+  localStorage.setItem(name, JSON.stringify(data));
 }
 
 function getToStorage(name) {
-  return JSON.parse(sessionStorage.getItem(name))
+  return JSON.parse(localStorage.getItem(name))
 
 }
 
@@ -70,7 +69,6 @@ async function getUserComments() {
   saveToStorage('commentsList', comments);
   displayComments(comments);
 };
-
 
 function sortedComments() {
   const sortDirection = sortDirectionSelect.value;
