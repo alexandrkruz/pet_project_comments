@@ -9,7 +9,6 @@ searchInput.addEventListener('keyup', filteredByText);
 const sortDirectionSelect = document.getElementById("sort-direction");
 sortDirectionSelect.addEventListener("change", sortedComments);
 
-
 getUserComments();
 
 function filteredByText(event) {
@@ -46,13 +45,13 @@ function saveToStorage(name, data) {
 }
 
 function getToStorage(name) {
-  return JSON.parse(localStorage.getItem(name))
-
+  const storedData = localStorage.getItem(name);
+  return storedData ? JSON.parse(storedData) : [];
 }
 
 function displayComments(comments) {
   let comment = '';
-  for(let i = 0; i < comments.length; i++) {
+  for (let i = 0; i < comments.length; i++) {
     comment += `<article class='block'>
       <h3 class='user-name'>${comments[i].title}</h3>
       <span class='comment-time'>${comments[i].time}</span>
@@ -64,11 +63,18 @@ function displayComments(comments) {
 }
 
 async function getUserComments() {
-  let response = await fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
-  let comments = await response.json();
-  saveToStorage('commentsList', comments);
-  displayComments(comments);
-};
+  let storedComments = getToStorage('commentsList');
+
+  if (storedComments.length > 0) {
+    displayComments(storedComments);
+  } else {
+   
+    let response = await fetch('https://run.mocky.io/v3/95fc487f-cc77-4965-824f-c13b582983c0');
+    let comments = await response.json();
+    saveToStorage('commentsList', comments);
+    displayComments(comments);
+  }
+}
 
 function sortedComments() {
   const sortDirection = sortDirectionSelect.value;
@@ -81,4 +87,4 @@ function sortedComments() {
   }
 
   displayComments(allComments);
-};
+}
